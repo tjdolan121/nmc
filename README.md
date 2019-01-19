@@ -1,5 +1,7 @@
 # Network Monitoring Center
 
+![NMC](static/img/Screenshot.png?raw=true "NMC")
+
 ## Along with "Tickets" and "GABC", this app was designed as a "concept app" to streamline various processes in the DoD.
 
 ## Whereas "Tickets" deals with streamlining customer IT support, "Network Monitoring Center was designed to give better situational awareness to deployed comms personnel.
