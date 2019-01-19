@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block header %}
+    <div class="jumbotron">
+        <h2 style="text-align: center">Welcome to the Network Monitoring Center</h2>
+        <p style="text-align: center">Real time network information for deployed units.  Anytime. Anywhere.</p>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <h3>Welcome, {{ user.email }}</h3>
+    <h3>My Networks:</h3>
+    {% for unit in units %}
+        <h3><a href="{% url 'netdash' slug=unit.slug %}">{{ unit.title }}</a></h3>
+    {% empty %}
+        <p>You have no unit assigned.</p>
+        <p>Please contact the site administrator to be assigned a unit.</p>
+    {% endfor %}
+{% endblock %}

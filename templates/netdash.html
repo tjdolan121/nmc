@@ -1,0 +1,115 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ unit.title }}{% endblock %}
+
+{% block sidenav-left %}
+    <h3>MY FAVORITES</h3>
+    {% for favorite in favorites %}
+        <div class="panel panel-default" style="text-align: left">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" href="#collapse{{ forloop.counter }}">
+                        <strong>{{ favorite.title }}</strong><br>{{ favorite.location }}
+                    </a>
+                </h4>
+            </div>
+            <div id="collapse{{ forloop.counter }}" class="panel-collapse collapse">
+                <div class="panel-body" style="text-align: center"><strong>Overall Status:<br>{{ favorite.network_board.overall_status }}</strong><br><hr>
+                    <div style="text-align: left">
+                        <h5 style="text-align: center"><strong>Messages:</strong></h5>
+                        {% for message in favorite.messages.all %}
+                            {% if forloop.first %}
+                                <strong>{{ message.subject }}</strong><br>
+                                {{ message.created_at }}<br>
+                                Priority: {{ message.priority }}<br>
+                                <i>{{ message.body }}</i>
+                                <p style="text-align: center"><a href="#">See all messages</a></p>
+                            {% endif %}
+                        {% endfor %}
+                        <hr><h5 style="text-align: center"><strong>Contact Us:</strong></h5>
+                        {{ favorite.contact_info.poc }}<br>
+                        {{ favorite.contact_info.email }}<br>
+                        {{ favorite.contact_info.phone }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}
+
+{% block content %}
+    <h1 style="text-align: center">{{ unit.title }}</h1>
+    <h5 style="text-align: center">{{ unit.location }}</h5>
+    <div style="text-align: center"><img src="../static/img/UnitLogo.png" style="text-align: center"></div>
+    <h4><a href="{% url 'detail_view' slug=unit.slug %}">Update Your Unit</a></h4>
+    <hr>
+    <div class="panel panel-default">
+        <div class="panel-heading"><strong>OVERALL STATUS: {{ unit.network_board.overall_status }}</strong></div>
+        <div class="panel-body">
+            <h3>Services</h3>
+            <p>Updated {{ unit.network_board.updated_at }}</p>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Service</th>
+                    <th>Status</th>
+                    <th>Details</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for service in unit.network_board.services.all %}
+                    <tr>
+                        <td>{{ service.name }}</td>
+                        <td>{{ service.status }}</td>
+                        <td>{{ service.more_info }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
+
+{% block sidenav-right %}
+    <h3>CURRENT MESSAGE</h3>
+    <div class="panel panel-default" style="text-align: left">
+        <div class="panel-heading"><strong>{{ unit.title }}</strong><br>{{ unit.location }}</div>
+        <div class="panel-body" style="text-align: center"><strong>Overall Status:<br>{{ unit.network_board.overall_status }}</strong><br><hr>
+            <div style="text-align: left">
+                <h5 style="text-align: center"><strong>Messages:</strong></h5>
+                {% for message in unit.messages.all %}
+                    {% if forloop.first %}
+                        <strong>{{ message.subject }}</strong><br>
+                        {{ message.created_at }}<br>
+                        Priority: {{ message.priority }}<br>
+                        <i>{{ message.body }}</i><br>
+                        <p style="text-align: center"><a href="#">See all messages</a></p>
+                    {% endif %}
+                {% endfor %}
+                <hr><h5 style="text-align: center"><strong>My POC:</strong></h5>
+                {{ unit.contact_info.poc }}<br>
+                {{ unit.contact_info.email }}<br>
+                {{ unit.contact_info.phone }}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+
+{#<div class="container">#}
+{#  <h2>Collapsible Panel</h2>#}
+{#  <p>Click on the collapsible panel to open and close it.</p>#}
+{#  <div class="panel-group">#}
+{#    <div class="panel panel-default">#}
+{#      <div class="panel-heading">#}
+{#        <h4 class="panel-title">#}
+{#          <a data-toggle="collapse" href="#collapse1">Collapsible panel</a>#}
+{#        </h4>#}
+{#      </div>#}
+{#      <div id="collapse1" class="panel-collapse collapse">#}
+{#        <div class="panel-body">Panel Body</div>#}
+{#        <div class="panel-footer">Panel Footer</div>#}
+{#      </div>#}
+{#    </div>#}
+{#  </div>#}
+{#</div>#}

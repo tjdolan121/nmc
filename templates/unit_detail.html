@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2>{{ unit.title }}</h2>
+    <h3>{{ unit.location }}</h3><hr>
+    <h4>Network Status:<br> {{ unit.network_board.overall_status }}</h4><a href="{% url 'edit_status' slug=unit.slug %}?next={{ request.path|urlencode }}">Update</a> <hr>
+    <h4>Services:</h4>
+    <p><a href="{% url 'add_service' slug=unit.slug %}?next={{ request.path|urlencode }}" style="text-align: center">+ Add a new service</a></p>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Service</th>
+            <th>Status</th>
+            <th>Details</th>
+            <th>Update</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for service in unit.network_board.services.all %}
+            <tr>
+                <td>{{ service.name }}</td>
+                <td>{{ service.status }}</td>
+                <td>{{ service.more_info }}</td>
+                <td><a href="{% url 'edit_service' slug=unit.slug pk=service.id %}?next={{ request.path|urlencode }}">Update</a> </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <hr>
+    <h4>Messages:</h4>
+    <p><a href="{% url 'add_message' slug=unit.slug %}?next={{ request.path|urlencode }}">+ Add a new message</a></p>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Subject</th>
+            <th>Created At</th>
+            <th>Priority</th>
+            <th>Body</th>
+            <th>Delete</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for message in unit.messages.all %}
+            <tr>
+                <td>{{ message.subject }}</td>
+                <td>{{ message.created_at }}</td>
+                <td>{{ message.priority }}</td>
+                <td>{{ message.body }}</td>
+                <td><a href="{% url 'delete_message' slug=unit.slug pk=message.id %}?next={{ request.path|urlencode }}">Delete</a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <hr>
+    <h4>Favorites:</h4>
+    <p><a href="{% url 'add_favorite' slug=unit.slug %}?next={{ request.path|urlencode }}">+ Add a favorite</a></p>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Subject</th>
+            <th>Created At</th>
+            <th>Priority</th>
+            <th>Body</th>
+            <th>Remove</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for favorite in favorites %}
+            <tr>
+                <td>{{ favorite.title }}</td>
+                <td>{{ favorite.location }}</td>
+                <td>{{ favorite.network_board.overall_status }}</td>
+                <td>{{ favorite.title }}</td>
+                <td><a href="{% url 'delete_favorite' slug=unit.slug pk=favorite.id %}?next={{ request.path|urlencode }}">Remove</a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
