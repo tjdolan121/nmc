@@ -34,4 +34,6 @@ STEP 9: Run server: ```python manage.py runserver```
 
 STEP 10: Navigate to http://127.0.0.1:8000/admin in browser, log in with your super user account, and create some data.
 
+#### Commits to master are set to auto-deploy to the staging app, found here: https://secret-cliffs-75621.herokuapp.com
+
 ### Feel free to message me if you have any questions!
