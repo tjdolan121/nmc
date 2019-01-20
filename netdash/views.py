@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.views.generic import UpdateView
 
 from .models import ContactInfo, Service, Message, NetworkBoard, Unit
-from .forms import MessageForm, ServiceForm, ServiceUpdateForm, StatusUpdateForm, FavoriteForm
+from .forms import MessageForm, ServiceForm, ServiceUpdateForm, StatusUpdateForm, UnitForm,FavoriteForm
 
 
 @login_required
@@ -28,6 +28,21 @@ def detail_view(request, slug):
     favorites = unit.favorites.all()
     return render(request, 'unit_detail.html', {'unit': unit,
                                                 'favorites': favorites})
+
+
+@login_required
+def add_unit_view(request):
+    next = request.POST.get('next', '/')
+    if request.method == 'POST':
+        unit_form = UnitForm(data=request.POST)
+        if unit_form.is_valid():
+            new_unit = unit_form.save(commit=False)
+            new_unit.save()
+            new_unit.users.add(request.user)
+            return HttpResponseRedirect(next)
+    else:
+        unit_form = UnitForm()
+    return render(request, 'add_unit.html', {'form': unit_form})
 
 
 @login_required

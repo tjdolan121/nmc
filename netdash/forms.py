@@ -14,6 +14,12 @@ class ServiceForm(forms.ModelForm):
         fields = ('name', 'status', 'more_info')
 
 
+class UnitForm(forms.ModelForm):
+    class Meta:
+        model = Unit
+        fields = ('title', 'location')
+
+
 class FavoriteForm(forms.ModelForm):
     class Meta:
         model = Unit

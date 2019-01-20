@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block title %}Add Unit to NMC{% endblock %}
+
+{% block content %}
+    <h2>Add your unit to NMC</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="hidden" name="next" value="{{ request.GET.next }}">
+        <input type="submit" class="btn btn-default" value="Submit">
+    </form>
+{% endblock %}

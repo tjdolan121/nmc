@@ -16,6 +16,6 @@
         <h3><a href="{% url 'netdash' slug=unit.slug %}">{{ unit.title }}</a></h3>
     {% empty %}
         <p>You have no unit assigned.</p>
-        <p>Please contact the site administrator to be assigned a unit.</p>
+        <p><a href="{% url 'add_unit' %}?next={{ request.path|urlencode }}">Add your unit to NMC</a></p>
     {% endfor %}
 {% endblock %}
