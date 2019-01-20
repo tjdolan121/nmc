@@ -1,0 +1,1 @@
+web: gunicorn nmc.wsgi --log-file -
