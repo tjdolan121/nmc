@@ -1,9 +1,8 @@
 from django.shortcuts import render, get_object_or_404, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
-from django.views.generic import UpdateView
 
-from .models import ContactInfo, Service, Message, NetworkBoard, Unit
-from .forms import MessageForm, ServiceForm, ServiceUpdateForm, StatusUpdateForm, UnitForm,FavoriteForm
+from .models import Service, Message, NetworkBoard, Unit
+from .forms import MessageForm, ServiceForm, ServiceUpdateForm, StatusUpdateForm, UnitForm, FavoriteForm
 
 
 @login_required
@@ -36,9 +35,9 @@ def add_unit_view(request):
     if request.method == 'POST':
         unit_form = UnitForm(data=request.POST)
         if unit_form.is_valid():
-            new_unit = unit_form.save(commit=False)
-            new_unit.save()
+            new_unit = unit_form.save()
             new_unit.users.add(request.user)
+            NetworkBoard.objects.create(unit=new_unit)
             return HttpResponseRedirect(next)
     else:
         unit_form = UnitForm()
